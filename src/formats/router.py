@@ -7,10 +7,7 @@ from renesandro.src.database.core import get_db
 from renesandro.src.formats import service
 from sqlalchemy.orm import Session
 
-router = APIRouter(
-    tags=['format'],
-    prefix='/format',
-)
+router = APIRouter()
 router_placid = APIRouter(
     tags=['placid'],
     prefix='/placid',
