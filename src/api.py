@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from fastapi import APIRouter
-from images.router import router as images_router
 from renesandro.src.formats.router import router as formats_router
+from renesandro.src.images.router import router as images_router
 
 api_router = APIRouter()
 
