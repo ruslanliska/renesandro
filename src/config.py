@@ -12,6 +12,8 @@ PUBLIC_PLACID_API_KEY = os.environ.get('PUBLIC_PLACID_API_KEY')
 AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
+BASE_API_URL = '/api/v1'
+
 
 class Settings:
     PROJECT_NAME: str = 'Renesandro'
