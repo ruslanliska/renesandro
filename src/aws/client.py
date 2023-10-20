@@ -45,10 +45,10 @@ class S3Client:
         if prefix:
             for object_summary in self.bucket.objects.filter(Prefix=prefix):
                 file_path = object_summary.key.strip()
-                file_name = file_path.split('/')[1]
+                file_name = file_path.split('/')[2]
                 try:
                     if file_name:
-                        files.append(file_path.split('/')[1])
+                        files.append(file_name)
                 except IndexError:
                     continue
             return files
