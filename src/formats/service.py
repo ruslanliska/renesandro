@@ -59,7 +59,7 @@ class PlacidClient:
             endpoint, headers=headers, data=json.dumps(data),
         ).json()
         logging.debug(response)
-        return
+        return response
 
     @classmethod
     def get_image(cls, image_id):
