@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from boto3.session import Session
 from renesandro.src.config import AWS_ACCESS_KEY
+from renesandro.src.config import AWS_REGION
 from renesandro.src.config import AWS_SECRET_ACCESS_KEY
 
 
@@ -11,8 +12,10 @@ class S3Client:
             aws_access_key_id=AWS_ACCESS_KEY,
             aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         )
+        self.region = AWS_REGION
         s3 = _session.resource('s3')
         self.bucket = s3.Bucket(bucket_name)
+        self.bucket_name = bucket_name
 
     def list_files(self, prefix=None):
         """
@@ -62,5 +65,6 @@ class S3Client:
             Body=open(file_body, 'rb'),
         )
 
-    def get_objects_urls_folder(self, folder_name):
-        ...
+    def get_file_url(self, prefix, filename):
+        url = f'https://{self.bucket_name}.s3.amazonaws.com/{prefix}{filename}'
+        return url
