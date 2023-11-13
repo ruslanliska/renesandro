@@ -5,6 +5,7 @@ from sqlalchemy import Column
 from sqlalchemy import ForeignKey
 from sqlalchemy import Integer
 from sqlalchemy import String
+from sqlalchemy.orm import relationship
 
 
 class TextDescription(Base):
@@ -22,4 +23,9 @@ class Text(Base):
     __tablename__ = 'text'
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     text = Column(String)
-    description = Column(ForeignKey('text_description.id'))
+    description_id = Column(
+        Integer, ForeignKey(
+            'text_description.id',
+        ), nullable=False,
+    )
+    description = relationship('TextDescription', backref='texts')
