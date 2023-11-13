@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 
 import requests
 from renesandro.src.config import AWS_ACCESS_KEY
@@ -27,24 +28,21 @@ class PlacidClient:
         response = requests.get(endpoint, headers=headers).json()
         return response
 
+    @classmethod
     def create_image(
-        self,
+        cls,
         bucket_name: str,
         template_uuid: str,
         layers: dict[str, str],
+        format_generation_id: str,
+        source_image: str,
+        image_destination_folder: str = 'formats/result',
     ):
-        endpoint = self.endpoint_base + template_uuid
+        endpoint = cls.endpoint_base + template_uuid
         data = {
             'create_now': 'true',
             'passthrough': 'null',
-            'layers': {
-                'quote': {
-                    'text': 'RUSK',
-                },
-                'New picture layer': {
-                    'image': 'https://holywater.s3.amazonaws.com/test1.jpg',
-                },
-            },
+            'layers': layers,
             'transfer': {
                 'to': 's3',
                 'key': AWS_ACCESS_KEY,
@@ -52,15 +50,16 @@ class PlacidClient:
                 'region': 'us-east-1',
                 'bucket': bucket_name,
                 'visibility': 'public',
-                'path': 'test1.jpg',
+                'path': f'{image_destination_folder}/{format_generation_id}/renesandro-{source_image}',
                 'endpoint': 'https://s3.us-east-1.amazonaws.com',
             },
         }
-        headers = self.auth()
+        headers = cls.auth()
         response = requests.post(
             endpoint, headers=headers, data=json.dumps(data),
         ).json()
-        return response
+        logging.debug(response)
+        return
 
     @classmethod
     def get_image(cls, image_id):
