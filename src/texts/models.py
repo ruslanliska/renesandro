@@ -13,7 +13,12 @@ class TextDescription(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     description = Column(String)
-    name = Column(String, nullable=True)
+    name = Column(String, nullable=True, unique=True)
+    max_characters = Column(Integer, default=50)
+    texts_quantity = Column(Integer, default=5)
+    product_description = Column(String, nullable=True)
+    text_type = Column(String, default='quote')
+    auditory_description = Column(String, nullable=True)
 
     def __repr__(self):
         return f'<TextDescription(id={self.id}, description={self.description}, name={self.name})>'
