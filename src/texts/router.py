@@ -24,15 +24,15 @@ def create_description(
 
 
 @router.get(
-    '/description/{id}',
-    status_code=status.HTTP_201_CREATED,
+    '/description/{name}',
+    status_code=status.HTTP_200_OK,
     response_description='Create description object',
 )
-def get_description(
-    id: int,
+def get_description_by_name(
+    name: str,
     db: Session = Depends(get_db),
 ):
-    return service.get_description_by_id(db, id)
+    return service.get_description_by_name(db, name.lower())
 
 
 @router.post(
