@@ -21,4 +21,4 @@ class TextDescriptionSchema(BaseModel):
 
 class TextSchema(BaseModel):
     text: str
-    description_id: int
+    description_name: str
