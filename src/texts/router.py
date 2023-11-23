@@ -53,6 +53,21 @@ def get_description_by_name(
     return service.get_description_by_name(db, name.lower())
 
 
+@router.get(
+    '/description/{name}/all',
+    status_code=status.HTTP_200_OK,
+    response_description='Get list of all texts for description',
+    response_model=TextCollection,
+)
+def get_list_of_texts_by_name(
+    name: str,
+    db: Session = Depends(get_db),
+):
+    description = service.get_description_by_name(db, name.lower())
+    texts_objs = service.get_texts_by_description(db, description)
+    return TextCollection(texts=[text.text for text in texts_objs])
+
+
 @router.post(
     '/description/{name}',
     status_code=status.HTTP_201_CREATED,
