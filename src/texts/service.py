@@ -63,3 +63,10 @@ def create_text(db: Session, request: TextSchema):
     db.commit()
     db.refresh(_text)
     return _text
+
+
+def get_texts_by_description(db: Session, description: TextDescription):
+    texts = db.query(Text).filter(
+        description == Text.description,
+    ).all()
+    return texts
