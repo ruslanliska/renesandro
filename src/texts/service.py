@@ -4,6 +4,7 @@ from renesandro.src.texts.exceptions import DescriptionNotFound
 from renesandro.src.texts.models import Text
 from renesandro.src.texts.models import TextDescription
 from renesandro.src.texts.schemas import TextDescriptionSchema
+from renesandro.src.texts.schemas import TextDescriptionUpdateSchema
 from renesandro.src.texts.schemas import TextSchema
 from sqlalchemy.orm import Session
 
@@ -22,6 +23,28 @@ def create_description(db: Session, request: TextDescriptionSchema):
     db.commit()
     db.refresh(_description)
     return _description
+
+
+def update_description(
+    db: Session,
+    description_name: str,
+    request: TextDescriptionUpdateSchema,
+):
+    # get the existing data
+    db_description = db.query(TextDescription).filter(
+        TextDescription.name == description_name,
+    ).one_or_none()
+    if not db_description:
+        return None
+
+    # Update model class variable from requested fields
+    for var, value in vars(request).items():
+        setattr(db_description, var, value) if value else None
+
+    db.add(db_description)
+    db.commit()
+    db.refresh(db_description)
+    return db_description
 
 
 def get_description_by_name(db: Session, description_name: str):
