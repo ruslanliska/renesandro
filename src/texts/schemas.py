@@ -19,6 +19,17 @@ class TextDescriptionSchema(BaseModel):
         return value.lower()
 
 
+class TextDescriptionUpdateSchema(BaseModel):
+    max_characters: int
+    texts_quantity: int
+    text_type: str
+    auditory_description: str
+
+
 class TextSchema(BaseModel):
     text: str
     description_name: str
+
+
+class TextCollection(BaseModel):
+    texts: list[str]
