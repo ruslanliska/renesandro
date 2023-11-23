@@ -27,7 +27,7 @@ class Settings:
     POSTGRES_DB: str = os.getenv('POSTGRES_DB', 'postgres')
     DATABASE_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}'
 
-    OPENAI_KEY: str = os.getenv('OPENAI_KEY')
+    OPENAI_API_KEY: str = os.getenv('OPENAI_API_KEY')
 
 
 settings = Settings()
